@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>致我永恒的爱人</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@500;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- 哥特美学全局定义 --- */
+        :root {
+            --primary-gold: #d4af37; 
+            --primary-red: #720e1e;  
+            --bg-dark: #0f0508;      
+            --text-light: #e0e0e0;
+            --font-title: 'Noto Serif SC', serif; 
+            --font-body: 'Noto Serif SC', serif;    
+            --font-sign: 'Ma Shan Zheng', cursive; 
+        }
+
+        body, html {
+            margin: 0; padding: 0; width: 100%; height: 100%;
+            background-color: var(--bg-dark);
+            background-image: 
+                radial-gradient(circle at 50% 30%, #3b0910 0%, #0f0508 70%),
+                url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23d4af37' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            color: var(--text-light);
+            font-family: var(--font-body);
+            overflow: hidden; user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* --- 装饰边框 --- */
+        .ornament-border {
+            position: fixed; top: 12px; left: 12px; right: 12px; bottom: 12px;
+            border: 2px solid rgba(212, 175, 55, 0.25); pointer-events: none; z-index: 100;
+            box-shadow: inset 0 0 20px rgba(114, 14, 30, 0.2);
+        }
+        .ornament-border::before, .ornament-border::after {
+            content: '✥'; position: absolute; color: var(--primary-gold); font-size: 24px;
+            text-shadow: 0 0 5px rgba(212, 175, 55, 0.5);
+        }
+        .ornament-border::before { top: -14px; left: 50%; transform: translateX(-50%); }
+        .ornament-border::after { bottom: -16px; left: 50%; transform: translateX(-50%); }
+
+        /* --- 页面控制 --- */
+        .page {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            display: flex; flex-direction: column; align-items: center;
+            opacity: 0; pointer-events: none; transition: opacity 1.5s cubic-bezier(0.4, 0.0, 0.2, 1);
+            z-index: 1; overflow-y: auto; padding: 40px 0; box-sizing: border-box;
+        }
+        .page.center-content { justify-content: center; overflow: hidden; }
+        .page.active { opacity: 1; pointer-events: all; z-index: 10; }
+
+        /* --- 按钮 --- */
+        .gothic-btn {
+            background: linear-gradient(to bottom, #2b0a10, #1a0608);
+            color: var(--primary-gold); border: 1px solid var(--primary-gold);
+            padding: 18px 45px; font-family: var(--font-title); font-weight: 700;
+            font-size: 1.3rem; letter-spacing: 4px; cursor: pointer; position: relative;
+            transition: all 0.5s ease; margin-top: 40px; margin-bottom: 40px;
+            box-shadow: 0 0 0 3px #0f0508, 0 0 0 5px rgba(212, 175, 55, 0.4), 0 10px 20px rgba(0,0,0,0.5);
+            text-shadow: 0 2px 2px rgba(0,0,0,0.8);
+            z-index: 20;
+        }
+        .gothic-btn::after {
+            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+            background: linear-gradient(to bottom right, rgba(255,255,255,0) 20%, rgba(212, 175, 55, 0.1) 50%, rgba(255,255,255,0) 80%);
+            transform: rotate(45deg); transition: all 0.5s linear; opacity: 0; pointer-events: none;
+        }
+        .gothic-btn:hover {
+            color: #fff; background: var(--primary-red);
+            box-shadow: 0 0 0 3px #0f0508, 0 0 0 6px rgba(212, 175, 55, 0.8), 0 0 30px rgba(114, 14, 30, 0.8);
+        }
+        .gothic-btn:hover::after { opacity: 1; transform: rotate(45deg) translate(50%, 50%); }
+
+        /* --- 视频圆窗 --- */
+        .video-frame {
+            position: relative; width: 260px; height: 260px;
+            border-radius: 50%; overflow: hidden; border: 3px solid var(--primary-gold);
+            box-shadow: 0 0 0 8px rgba(114, 14, 30, 0.3), 0 0 40px rgba(114, 14, 30, 0.6), inset 0 0 20px rgba(0,0,0,0.8);
+            animation: frameFloat 6s ease-in-out infinite; background: #000;
+        }
+        .video-frame video { width: 100%; height: 100%; object-fit: cover; transform: scale(1.05); }
+        @keyframes frameFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
+
+        /* --- 相框样式 --- */
+        .gallery-frame {
+            padding: 12px; border: 4px groove var(--primary-gold); background: #1a0b0f;
+            margin-bottom: 20px; position: relative; width: 80%; max-width: 500px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+        }
+        .gallery-frame img { 
+            width: 100%; display: block; filter: saturate(80%) contrast(110%); 
+        }
+        .photo-text { margin-top: 20px; color: var(--primary-gold); text-align: center; font-size: 1.2rem; text-shadow: 0 2px 2px black; letter-spacing: 2px; }
+
+        h1.gothic-title {
+            font-family: var(--font-title); font-weight: 700; font-size: 3rem; margin-top: 50px;
+            background: linear-gradient(to bottom, #f0e6d2, #d4af37, #8a6e18);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.8); letter-spacing: 5px;
+        }
+
+        /* --- Module 1: 愿望清单样式 --- */
+        .wish-container {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            overflow: hidden; pointer-events: none;
+            padding: 50px; box-sizing: border-box; 
+        }
+        .main-wish-text {
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            font-size: 1.8rem; color: var(--primary-gold); font-weight: 700;
+            text-shadow: 0 0 15px rgba(212, 175, 55, 0.8); z-index: 20;
+            text-align: center; border-bottom: 2px solid var(--primary-red); padding-bottom: 10px;
+            background: rgba(15, 5, 8, 0.85); 
+            border-radius: 10px; padding: 15px 30px;
+            box-shadow: 0 0 30px rgba(0,0,0,0.8);
+            width: auto; max-width: 80%;
+        }
+        
+        .floating-wish {
+            position: absolute; 
+            white-space: nowrap; 
+            opacity: 0; 
+            transition: opacity 1s ease-in;
+            animation: wishFloat 10s ease-in-out infinite alternate;
+            font-family: 'Noto Serif SC', serif;
+        }
+        
+        @keyframes wishFloat {
+            0% { transform: translateY(0) translateX(0); }
+            100% { transform: translateY(-15px) translateX(10px); }
+        }
+
+        /* 按钮定位 */
+        #btnWishNext {
+            position: absolute; bottom: 10%; left: 50%; transform: translateX(-50%);
+            z-index: 50; 
+        }
+
+        /* --- Module 2: 烛光/星辰互动样式 --- */
+        .candle-container {
+            position: relative; width: 100%; height: 50vh; display: flex;
+            justify-content: center; align-items: center; flex-direction: column;
+        }
+        .candle-flame {
+            width: 30px; height: 30px; background: #ff9900;
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            box-shadow: 0 0 20px #ff9900, 0 0 40px #ff4d6d;
+            animation: flicker 1s infinite alternate;
+            cursor: pointer; transition: all 1s ease;
+        }
+        .candle-flame:hover { transform: scale(1.2); }
+        
+        .candle-text {
+            margin-top: 40px; font-size: 1.2rem; color: #555; opacity: 0; transition: opacity 2s;
+            text-align: center; letter-spacing: 3px;
+        }
+        
+        .lit-up .candle-flame {
+            transform: scale(30); opacity: 0;
+        }
+        .lit-up-bg {
+            animation: lightExplosion 2s forwards;
+        }
+        @keyframes flicker {
+            0% { transform: scale(1); opacity: 0.8; }
+            100% { transform: scale(1.1); opacity: 1; }
+        }
+        @keyframes lightExplosion {
+            0% { background-color: var(--bg-dark); }
+            50% { background-color: #4a1218; }
+            100% { background-color: var(--bg-dark); }
+        }
+
+        /* --- 游戏 & 其他通用 --- */
+        .heart-emoji {
+            position: absolute; font-size: 2.8rem; cursor: pointer;
+            filter: drop-shadow(0 0 8px rgba(114, 14, 30, 0.8));
+            animation: floatUpSlow linear forwards; transition: transform 0.2s;
+        }
+        .heart-emoji:active { transform: scale(1.3); filter: drop-shadow(0 0 15px var(--primary-red)); }
+
+        .quote-toast {
+            position: absolute; top: 45%; left: 50%; transform: translate(-50%, -50%);
+            background: rgba(15, 5, 8, 0.95); border: 2px solid var(--primary-gold);
+            color: var(--primary-gold); padding: 20px 30px; font-weight: 700; font-size: 1.3rem;
+            pointer-events: none; opacity: 0; text-align: center; width: auto; min-width: 60%;
+            z-index: 100; box-shadow: 0 10px 30px rgba(0,0,0,0.9); animation: fadeToast 3s ease-in-out forwards;
+        }
+        @keyframes fadeToast {
+            0% { opacity: 0; transform: translate(-50%, -35%); }
+            15% { opacity: 1; transform: translate(-50%, -50%); }
+            85% { opacity: 1; transform: translate(-50%, -50%); }
+            100% { opacity: 0; transform: translate(-50%, -65%); }
+        }
+        @keyframes floatUpSlow {
+            0% { transform: translateY(110vh) scale(0.8) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.9; }
+            100% { transform: translateY(-10vh) scale(1) rotate(20deg); opacity: 0.9; }
+        }
+
+        .parchment {
+            width: 85%; max-width: 600px; background: #c2a878;
+            padding: 45px; box-shadow: 0 20px 60px rgba(0,0,0,0.9); margin: auto 0;
+            clip-path: polygon(2% 5%, 98% 2%, 100% 96%, 95% 99%, 5% 98%, 1% 94%);
+            border: 5px solid rgba(114, 14, 30, 0.2); position: relative;
+        }
+        .parchment-content {
+            font-size: 1.25rem; line-height: 2; border: 3px double #720e1e; padding: 25px; color: #3b0910;
+        }
+        .signature-font { font-family: var(--font-sign); font-size: 2rem; margin-top: 10px; display: inline-block; transform: rotate(-2deg); color: #720e1e; }
+        #particles { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
+    </style>
+</head>
+<body>
+
+    <div class="ornament-border"></div>
+    <canvas id="particles"></canvas>
+    
+    <audio id="bgMusic" loop preload="auto">
+        <source src="assets/bgm.mp3" type="audio/mpeg">
+    </audio>
+
+    <div class="page active center-content" id="page1">
+        <div class="video-frame">
+            <video autoplay muted playsinline loop>
+                <source src="assets/rose_bloom.mp4" type="video/mp4">
+            </video>
+        </div>
+        <h1 class="gothic-title">爱意永恒</h1>
+        <p style="color: #a89078; font-size: 1.1rem; margin-top:10px; margin-bottom: 50px; letter-spacing: 2px;">以星辰为墨，书写不朽篇章</p>
+        <button class="gothic-btn" onclick="startJourney()">开启旅程 · Enter</button>
+    </div>
+
+    <div class="page center-content" id="page2">
+        <h2 style="font-size: 2.5rem; margin-bottom: 30px; color: var(--primary-gold); letter-spacing: 5px;">初见惊鸿，一眼万年</h2>
+        <div class="gallery-frame">
+            <img src="assets/memory.jpg" alt="Our Memory">
+            <div class="photo-text">我会毫不犹豫的奔向你，这次，每次，次次</div>
+        </div>
+        <button class="gothic-btn" onclick="nextPage(2)">继续前行 · Proceed</button>
+    </div>
+
+    <div class="page" id="page_wishlist">
+        <div class="wish-container" id="wishContainer">
+            </div>
+        <div class="main-wish-text" id="mainWishTitle">我想和你一起做很多事......</div>
+        <button class="gothic-btn" id="btnWishNext" onclick="nextPage('wishlist')">继续前行 · Proceed</button>
+    </div>
+
+    <div class="page center-content" id="page_lightup">
+        <h2 style="font-size: 2rem; color: #aaa; margin-bottom: 50px; text-align: center;">黑夜漫长，唯你闪耀</h2>
+        
+        <div class="candle-container" id="candleContainer" onclick="lightUpCandle()">
+            <div class="candle-flame"></div>
+            <div class="candle-text" id="candleText">点击烛光，点亮未来</div>
+        </div>
+        
+        <button class="gothic-btn" id="btnToGame" style="display: none; margin-top: 50px;" onclick="nextPage('lightup')">收集爱意 · Collect</button>
+    </div>
+
+    <div class="page center-content" id="page3">
+        <h2 style="font-size: 2.2rem; z-index: 20; color: var(--text-light);">收集 6 颗爱心</h2>
+        <div style="color: var(--primary-gold); font-size: 1.8rem; z-index: 20; border-bottom: 2px solid var(--primary-gold); padding-bottom: 10px; margin-top: 20px;">
+            <span id="score">0</span> / 6
+        </div>
+        <div id="gameArea" style="position: absolute; width:100%; height:100%; z-index:10;"></div>
+    </div>
+
+    <div class="page" id="page4">
+        <div class="parchment">
+            <div class="parchment-content" id="typewriterText"></div>
+            <div style="text-align: right; margin-top: 30px;">
+                <div style="font-size: 1.2rem; color: #720e1e;">永远爱你的，</div>
+                <div class="signature-font" id="myName">XXX</div>
+            </div>
+        </div>
+        <button class="gothic-btn" onclick="location.reload()">重温美好 · Replay</button>
+    </div>
+
+    <script>
+        // --- 🔴 配置区域 ---
+        const myName = "于子航"; 
+        document.getElementById('myName').innerText = myName;
+
+        const loveLetter = `Dear 宇鑫：
+
+情人节快乐。
+
+在这浩瀚宇宙的无尽长夜中，
+你是我唯一的光。
+驱散黑暗，照亮我的整个世界。
+我的每一次心跳都为你而动，
+无论风暴肆虐，还是万籁俱寂。
+我迈出的每一步都指向你。
+
+至死不渝。`;
+
+        const sweetQuotes = [
+            "爱你胜于昨日，略匮明朝。",
+            "幸得识卿桃花面，从此阡陌多暖意。",
+            "像云追着风，不问所起；像雨贴着地，情不自禁。",
+            "我将玫瑰藏于身后，时刻期盼与你赴约。",
+            "玫瑰终会枯萎，浪漫至死不渝。",
+            "海水有尽头，月亮有圆缺，人间有不足，但又你在，就能弥补。",
+            "为你，千千万万遍。"
+        ];
+
+        const wishListItems = [
+            "想和你去伦敦看泰晤士河上的日出", "想和你去喝塞纳河边的咖啡", "想和你去冰岛看极光", "想和你养一只萨摩耶",
+            "想和你手牵手逛超市", "想和你在雨天窝在沙发看电影", "想和你去迪士尼看烟花", "想和你拍很多很多合照",
+            "想和你在彼此面前毫无形象的大笑", "想和你一起去看一场演唱会", "想和你吃遍全国各地的美食",
+            "想和你每年一起过生日", "想和你去海边看日落", "想和你一起拼一个巨大的乐高", "想和你穿着睡衣去便利店",
+            "想和你互相吹头发", "想和你一起看北京的初雪", "想和你去成都看大熊猫", "想和你在摩天轮最高处拥抱",
+            "想和你一起去寺庙祈福", "想和你一起去西湖边骑行", "想和你一起布置我们的家", "想和你一起听歌",
+            "想和你一起去滑雪", "想和你在无人的街道散步", "想和你一起看恐怖片然后抱在一起", "想和你去西藏看布达拉宫",
+            "想和你一起减肥（虽然你不用）", "想和你换情侣头像", "想和你一起变老", "想要下辈子还要遇见你",
+            "想每天醒来第一眼都是你", "想给你亲手做一顿大餐", "想在冬天把手放进你的口袋",
+            "想和你撑一把伞在雨中漫步","想和你一起吃很多顿饭","在嘈杂喧闹的人群中对视",
+            "想和你一起走在傍晚的街道上看夕阳把影子辣的很长倡导仿佛能走到时间的尽头",
+            "想听你讲琐碎的日常","想和你一起看烟花","想和你一起逛街","想和你去KTV",
+            "想和你穿同款衣服","想和你一起去海洋馆","想和你一起露营","想和你一起追剧","想和你一起种花花草草"
+        ];
+
+        // --- 逻辑代码 ---
+        let score = 0;
+        const targetScore = 6;
+        let gameInterval;
+        let quoteIndex = 0;
+
+        function showPage(pageId) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById(pageId).classList.add('active');
+            document.getElementById(pageId).scrollTop = 0;
+        }
+
+        function nextPage(current) {
+            if (current === 2) {
+                showPage('page_wishlist');
+                // 延迟一小会儿，确保页面切换完成再开始生成文字
+                setTimeout(initWishList, 800);
+            } else if (current === 'wishlist') {
+                showPage('page_lightup');
+                setTimeout(() => {
+                    document.getElementById('candleText').style.opacity = 1;
+                }, 1000);
+            } else if (current === 'lightup') {
+                showPage('page3');
+                setTimeout(startGame, 800);
+            } else if (current === 3) {
+                showPage('page4');
+                setTimeout(startTypewriter, 800);
+            }
+        }
+
+        function startJourney() {
+            const audio = document.getElementById('bgMusic');
+            if (audio) {
+                audio.play().catch(e => console.log("播放失败...", e));
+            }
+            showPage('page2');
+        }
+
+        // --- Module 1: 愿望清单逻辑 (颜色修改 + 双重避让) ---
+        function initWishList() {
+            const container = document.getElementById('wishContainer');
+            container.innerHTML = ''; 
+
+            const containerWidth = container.clientWidth;
+            const containerHeight = container.clientHeight;
+            const padding = 20; 
+
+            // 1. 获取中间主标题的位置
+            const mainTitle = document.getElementById('mainWishTitle');
+            const titleRect = mainTitle.getBoundingClientRect();
+            // 扩大避让区 (safeMargin)
+            const safeMargin = 20;
+            const titleSafeBox = {
+                left: titleRect.left - safeMargin,
+                right: titleRect.right + safeMargin,
+                top: titleRect.top - safeMargin,
+                bottom: titleRect.bottom + safeMargin
+            };
+
+            // 2. 获取底部按钮的位置 (新增避让区)
+            const btn = document.getElementById('btnWishNext');
+            const btnRect = btn.getBoundingClientRect();
+            const btnSafeBox = {
+                left: btnRect.left - safeMargin,
+                right: btnRect.right + safeMargin,
+                top: btnRect.top - safeMargin, // 重点是按钮上方也不要贴太近
+                bottom: containerHeight // 底部一直延伸到屏幕底端
+            };
+
+            const shuffledWishes = wishListItems.sort(() => 0.5 - Math.random()).slice(0, 32);
+            let index = 0;
+
+            const interval = setInterval(() => {
+                if (index >= shuffledWishes.length) {
+                    clearInterval(interval);
+                    return;
+                }
+
+                const text = shuffledWishes[index];
+                const el = document.createElement('div');
+                el.classList.add('floating-wish');
+                el.innerText = text;
+
+                // 样式设置
+                const depth = Math.random(); 
+                let targetOpacity = 1;
+                let zIndex = 1;
+
+                if (depth > 0.7) {
+                    el.style.fontSize = (Math.random() * 0.4 + 1.2) + 'rem';
+                    targetOpacity = 0.95;
+                    zIndex = 5;
+                } else if (depth > 0.4) {
+                    el.style.fontSize = (Math.random() * 0.3 + 0.9) + 'rem';
+                    targetOpacity = 0.7;
+                    zIndex = 3;
+                } else {
+                    el.style.fontSize = (Math.random() * 0.2 + 0.7) + 'rem';
+                    targetOpacity = 0.4;
+                    zIndex = 1;
+                }
+                
+                el.style.zIndex = zIndex;
+                
+                // 🔴 修改：颜色只允许金色和白色
+                const colors = ['#d4af37', '#e0e0e0'];
+                el.style.color = colors[Math.floor(Math.random() * colors.length)];
+
+                // 预插入以获取宽高
+                el.style.visibility = 'hidden';
+                container.appendChild(el);
+                
+                const w = el.offsetWidth;
+                const h = el.offsetHeight;
+
+                const maxX = containerWidth - w - padding;
+                const maxY = containerHeight - h - padding;
+                
+                let x, y;
+                let validPosition = false;
+                let attempts = 0;
+
+                while (!validPosition && attempts < 50) {
+                    x = padding + Math.random() * (maxX - padding);
+                    y = padding + Math.random() * (maxY - padding);
+
+                    const textRect = {
+                        left: x,
+                        right: x + w,
+                        top: y,
+                        bottom: y + h
+                    };
+
+                    // 🔴 双重检测：不仅要避开标题，还要避开底部按钮
+                    const hitsTitle = !(textRect.right < titleSafeBox.left || 
+                                      textRect.left > titleSafeBox.right || 
+                                      textRect.bottom < titleSafeBox.top || 
+                                      textRect.top > titleSafeBox.bottom);
+
+                    const hitsButton = !(textRect.right < btnSafeBox.left || 
+                                       textRect.left > btnSafeBox.right || 
+                                       textRect.bottom < btnSafeBox.top || 
+                                       textRect.top > btnSafeBox.bottom);
+
+                    if (!hitsTitle && !hitsButton) {
+                        validPosition = true;
+                    }
+                    attempts++;
+                }
+
+                // 失败回退策略：如果找不到位置，优先放在上半部分（比较空）
+                if (!validPosition) {
+                     y = padding + Math.random() * (titleSafeBox.top - h - padding * 2);
+                     x = padding + Math.random() * (maxX - padding);
+                }
+
+                el.style.left = x + 'px';
+                el.style.top = y + 'px';
+                el.style.visibility = 'visible';
+                
+                requestAnimationFrame(() => {
+                    el.style.opacity = targetOpacity;
+                });
+
+                index++;
+            }, 100); 
+        }
+
+        function lightUpCandle() {
+            const container = document.getElementById('candleContainer');
+            const btn = document.getElementById('btnToGame');
+            const text = document.getElementById('candleText');
+            
+            container.classList.add('lit-up');
+            document.getElementById('page_lightup').classList.add('lit-up-bg');
+            
+            text.innerText = "情不知所起，一往而情深";
+            text.style.color = "#d4af37";
+            text.style.fontSize = "1.5rem";
+            text.style.textShadow = "0 0 10px #d4af37";
+            
+            setTimeout(() => {
+                btn.style.display = 'block';
+                btn.animate([
+                    { opacity: 0, transform: 'translateY(20px)' },
+                    { opacity: 1, transform: 'translateY(0)' }
+                ], { duration: 1000, fill: 'forwards' });
+            }, 1000);
+        }
+
+        function startGame() {
+            const gameArea = document.getElementById('gameArea');
+            const scoreEl = document.getElementById('score');
+            score = 0;
+            scoreEl.innerText = score;
+            quoteIndex = 0;
+
+            gameInterval = setInterval(() => {
+                if (score >= targetScore) { clearInterval(gameInterval); return; }
+                createHeart();
+            }, 1400);
+
+            function createHeart() {
+                const el = document.createElement('div');
+                el.classList.add('heart-emoji');
+                el.innerText = '❤️'; 
+                el.style.left = (Math.random() * 70 + 15) + '%';
+                const duration = Math.random() * 5 + 10; 
+                el.style.animationDuration = duration + 's';
+
+                el.onclick = (e) => {
+                    if(el.clicked) return;
+                    el.clicked = true;
+                    score++;
+                    scoreEl.innerText = score;
+                    el.style.opacity = 0;
+                    el.style.transform = 'scale(2) rotate(45deg)';
+                    setTimeout(() => el.remove(), 300);
+                    showQuote();
+
+                    if (score >= targetScore) {
+                        clearInterval(gameInterval);
+                        document.querySelectorAll('.heart-emoji').forEach(h => h.style.opacity = 0);
+                        setTimeout(() => nextPage(3), 3500);
+                    }
+                };
+                gameArea.appendChild(el);
+                setTimeout(() => { if(el.parentNode) el.remove(); }, duration * 1000);
+            }
+        }
+
+        function showQuote() {
+            const quote = sweetQuotes[quoteIndex];
+            quoteIndex = (quoteIndex + 1) % sweetQuotes.length;
+            const toast = document.createElement('div');
+            toast.classList.add('quote-toast');
+            toast.innerText = quote;
+            document.body.appendChild(toast);
+            setTimeout(() => toast.remove(), 3000);
+        }
+
+        function startTypewriter() {
+            const el = document.getElementById('typewriterText');
+            el.innerHTML = '';
+            let i = 0;
+            function type() {
+                if (i < loveLetter.length) {
+                    el.innerHTML += loveLetter.charAt(i) === '\n' ? '<br>' : loveLetter.charAt(i);
+                    i++;
+                    setTimeout(type, 120);
+                }
+            }
+            type();
+        }
+
+        const canvas = document.getElementById('particles');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+        window.addEventListener('resize', resize); resize();
+
+        class Particle {
+            constructor() { this.reset(); }
+            reset() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2.5 + 0.5;
+                this.speedY = Math.random() * -0.4 - 0.1; 
+                this.alpha = Math.random() * 0.4 + 0.1;
+                this.color = Math.random() > 0.8 ? '#720e1e' : '#d4af37';
+            }
+            update() {
+                this.y += this.speedY; this.alpha -= 0.001;
+                if (this.y < 0 || this.alpha <= 0) this.reset();
+            }
+            draw() {
+                ctx.globalAlpha = this.alpha; ctx.fillStyle = this.color;
+                ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.fill();
+            }
+        }
+        for(let i=0; i<80; i++) particles.push(new Particle());
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => { p.update(); p.draw(); });
+            requestAnimationFrame(animate);
+        }
+        animate();
+    </script>
+</body>
+</html>
