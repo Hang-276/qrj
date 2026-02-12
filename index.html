@@ -56,13 +56,51 @@
         .page.center-content { justify-content: center; overflow: hidden; }
         .page.active { opacity: 1; pointer-events: all; z-index: 10; }
 
+        /* --- Module New: 写在最后 (暗夜长卷) --- */
+        .final-scroll-box {
+            width: 85%;
+            max-width: 650px;
+            height: 50vh; /* 占据屏幕高度 */
+            background: rgba(15, 5, 8, 0.85); /* 深色半透明背景 */
+            border: 1px solid var(--primary-gold); /* 金色细边框 */
+            padding: 25px;
+            box-sizing: border-box;
+            overflow-y: auto; /* 允许垂直滚动 */
+            margin-bottom: 30px;
+            position: relative;
+            box-shadow: 0 0 20px rgba(0,0,0,0.8), inset 0 0 50px rgba(0,0,0,0.8);
+            text-align: justify;
+            /* 适配移动端滚动体验 */
+            -webkit-overflow-scrolling: touch;
+        }
+
+        /* 哥特风格滚动条美化 */
+        .final-scroll-box::-webkit-scrollbar { width: 6px; }
+        .final-scroll-box::-webkit-scrollbar-track { background: #0f0508; border-left: 1px solid #333; }
+        .final-scroll-box::-webkit-scrollbar-thumb { background: var(--primary-red); border-radius: 3px; box-shadow: 0 0 5px rgba(114, 14, 30, 0.8); }
+
+        .final-text-content {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #dcdcdc; /* 银灰色文字 */
+            white-space: pre-wrap; /* 保留换行和空格 */
+            letter-spacing: 1.5px;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.8);
+        }
+        
+        .title-divider {
+            width: 100px; height: 2px;
+            background: linear-gradient(90deg, transparent, var(--primary-gold), transparent);
+            margin: 10px auto 20px auto;
+        }
+
         /* --- 按钮 --- */
         .gothic-btn {
             background: linear-gradient(to bottom, #2b0a10, #1a0608);
             color: var(--primary-gold); border: 1px solid var(--primary-gold);
             padding: 18px 45px; font-family: var(--font-title); font-weight: 700;
             font-size: 1.3rem; letter-spacing: 4px; cursor: pointer; position: relative;
-            transition: all 0.5s ease; margin-top: 40px; margin-bottom: 40px;
+            transition: all 0.5s ease; margin-top: 20px; margin-bottom: 20px;
             box-shadow: 0 0 0 3px #0f0508, 0 0 0 5px rgba(212, 175, 55, 0.4), 0 10px 20px rgba(0,0,0,0.5);
             text-shadow: 0 2px 2px rgba(0,0,0,0.8);
             z-index: 20;
@@ -249,7 +287,7 @@
 
     <div class="page" id="page_wishlist">
         <div class="wish-container" id="wishContainer">
-            </div>
+        </div>
         <div class="main-wish-text" id="mainWishTitle">我想和你一起做很多事......</div>
         <button class="gothic-btn" id="btnWishNext" onclick="nextPage('wishlist')">继续前行 · Proceed</button>
     </div>
@@ -281,12 +319,77 @@
                 <div class="signature-font" id="myName">XXX</div>
             </div>
         </div>
+        <button class="gothic-btn" onclick="nextPage(4)">还有几句话 · Next</button>
+    </div>
+
+    <div class="page center-content" id="page5">
+        <h1 class="gothic-title" style="margin-top: 0; font-size: 2.5rem;">写在最后</h1>
+        <div class="title-divider"></div>
+        
+        <div class="final-scroll-box">
+            <div class="final-text-content">
+虽然不太应该在这里出现这样的话
+但是我还是想说
+因为我不愿意把你弄得感动了最后却无疾而终
+这个网页是好几天之前做好的
+但是近几天我多了一些新的想法吧
+
+我真的很喜欢你，很喜欢很喜欢
+但是没有什么情感是会永远炽热的
+的确好像过了那段所谓“热恋”的时期了
+在这种时期维持一段感情的不再是一腔热血
+是相处中的一切正反馈
+也是坚持，以及对未来美好的幻想
+当然现在我们的关系只是朋友
+这只能算是我的自娱自乐罢了
+
+像你当初一样，我的理智好像占据了越来越高的位置
+我也开始思考了很多问题
+有一件事我最近一直想要和你交流一下可是也没什么合适的机会
+只能在现在向你表达
+
+我想要知道的是对于异地或者说难以见面的情侣维系感情的你的想法是什么
+坦白说我也不清楚
+我的朋友很多都是有了情感基础之后因为毕业或是工作的原因而异地
+对于这种开始就难以见面的情况我也没有什么成熟的经验
+但是我的想法是
+我是一个算是恋爱脑的人，一个不柏拉图的人
+我会把感情这件事摆在一个很高的位置
+几乎没什么能比其更重要
+当然，这不意味着我要求另一半也要置感情于同样的位置
+但是至少应该对这件少有的贯穿人生的事给予相当的重视
+
+我想要了解的无关乎当下
+这并不是短时间的价值排序而是人生的价值排序
+一段时期内，就像考研、找工作、或者心情不好等等
+某一段时期内无论怎么对待感情我都可以接受
+但我不希望永远是这种很淡的状态
+所以我想要知道的是拉长尺度在整个生活中你是什么样的态度
+
+你我都是想要一段长久的恋爱的人
+对于这样一段现实中有些坎坷有许多阻碍的恋爱
+我想是需要格外的用心去呵护的
+
+但是我也不希望你改变你所想要的状态
+坦白说我觉得你的经历已经没那么幸福
+不希望你再过多的委曲求全
+所以我想要知道你真正的想法是什么
+
+诚然，我知道你是一个很看重爱的人
+但是具象化的说
+在我们的相处之中
+我没有太看出你的想法是什么
+我也不希望给你带来伤害带来痛苦
+所以即便有些冒昧也想要跟你交流
+            </div>
+        </div>
+        
         <button class="gothic-btn" onclick="location.reload()">重温美好 · Replay</button>
     </div>
 
     <script>
         // --- 🔴 配置区域 ---
-        const myName = "于子航"; 
+        const myName = "Hang"; 
         document.getElementById('myName').innerText = myName;
 
         const loveLetter = `Dear 宇鑫：
@@ -304,11 +407,10 @@
 
         const sweetQuotes = [
             "爱你胜于昨日，略匮明朝。",
-            "幸得识卿桃花面，从此阡陌多暖意。",
             "像云追着风，不问所起；像雨贴着地，情不自禁。",
             "我将玫瑰藏于身后，时刻期盼与你赴约。",
             "玫瑰终会枯萎，浪漫至死不渝。",
-            "海水有尽头，月亮有圆缺，人间有不足，但又你在，就能弥补。",
+            "海水有尽头，月亮有圆缺，人间有不足，但有你在，就能弥补。",
             "为你，千千万万遍。"
         ];
 
@@ -320,10 +422,10 @@
             "想和你互相吹头发", "想和你一起看北京的初雪", "想和你去成都看大熊猫", "想和你在摩天轮最高处拥抱",
             "想和你一起去寺庙祈福", "想和你一起去西湖边骑行", "想和你一起布置我们的家", "想和你一起听歌",
             "想和你一起去滑雪", "想和你在无人的街道散步", "想和你一起看恐怖片然后抱在一起", "想和你去西藏看布达拉宫",
-            "想和你一起减肥（虽然你不用）", "想和你换情侣头像", "想和你一起变老", "想要下辈子还要遇见你",
+            "想和你一起减肥", "想和你换情侣头像", "想和你一起变老", "想要下辈子还要遇见你",
             "想每天醒来第一眼都是你", "想给你亲手做一顿大餐", "想在冬天把手放进你的口袋",
             "想和你撑一把伞在雨中漫步","想和你一起吃很多顿饭","在嘈杂喧闹的人群中对视",
-            "想和你一起走在傍晚的街道上看夕阳把影子辣的很长倡导仿佛能走到时间的尽头",
+            "想和你一起走在傍晚的街道上看夕阳把影子拉的很长长到仿佛能走到时间的尽头",
             "想听你讲琐碎的日常","想和你一起看烟花","想和你一起逛街","想和你去KTV",
             "想和你穿同款衣服","想和你一起去海洋馆","想和你一起露营","想和你一起追剧","想和你一起种花花草草"
         ];
@@ -343,7 +445,6 @@
         function nextPage(current) {
             if (current === 2) {
                 showPage('page_wishlist');
-                // 延迟一小会儿，确保页面切换完成再开始生成文字
                 setTimeout(initWishList, 800);
             } else if (current === 'wishlist') {
                 showPage('page_lightup');
@@ -356,6 +457,9 @@
             } else if (current === 3) {
                 showPage('page4');
                 setTimeout(startTypewriter, 800);
+            } else if (current === 4) {
+                // 🔴 新增：从信纸页跳转到“写在最后”页
+                showPage('page5');
             }
         }
 
@@ -367,7 +471,7 @@
             showPage('page2');
         }
 
-        // --- Module 1: 愿望清单逻辑 (颜色修改 + 双重避让) ---
+        // --- Module 1: 愿望清单逻辑 ---
         function initWishList() {
             const container = document.getElementById('wishContainer');
             container.innerHTML = ''; 
@@ -376,10 +480,8 @@
             const containerHeight = container.clientHeight;
             const padding = 20; 
 
-            // 1. 获取中间主标题的位置
             const mainTitle = document.getElementById('mainWishTitle');
             const titleRect = mainTitle.getBoundingClientRect();
-            // 扩大避让区 (safeMargin)
             const safeMargin = 20;
             const titleSafeBox = {
                 left: titleRect.left - safeMargin,
@@ -388,14 +490,13 @@
                 bottom: titleRect.bottom + safeMargin
             };
 
-            // 2. 获取底部按钮的位置 (新增避让区)
             const btn = document.getElementById('btnWishNext');
             const btnRect = btn.getBoundingClientRect();
             const btnSafeBox = {
                 left: btnRect.left - safeMargin,
                 right: btnRect.right + safeMargin,
-                top: btnRect.top - safeMargin, // 重点是按钮上方也不要贴太近
-                bottom: containerHeight // 底部一直延伸到屏幕底端
+                top: btnRect.top - safeMargin, 
+                bottom: containerHeight 
             };
 
             const shuffledWishes = wishListItems.sort(() => 0.5 - Math.random()).slice(0, 32);
@@ -412,7 +513,6 @@
                 el.classList.add('floating-wish');
                 el.innerText = text;
 
-                // 样式设置
                 const depth = Math.random(); 
                 let targetOpacity = 1;
                 let zIndex = 1;
@@ -432,12 +532,9 @@
                 }
                 
                 el.style.zIndex = zIndex;
-                
-                // 🔴 修改：颜色只允许金色和白色
                 const colors = ['#d4af37', '#e0e0e0'];
                 el.style.color = colors[Math.floor(Math.random() * colors.length)];
 
-                // 预插入以获取宽高
                 el.style.visibility = 'hidden';
                 container.appendChild(el);
                 
@@ -462,7 +559,6 @@
                         bottom: y + h
                     };
 
-                    // 🔴 双重检测：不仅要避开标题，还要避开底部按钮
                     const hitsTitle = !(textRect.right < titleSafeBox.left || 
                                       textRect.left > titleSafeBox.right || 
                                       textRect.bottom < titleSafeBox.top || 
@@ -479,10 +575,9 @@
                     attempts++;
                 }
 
-                // 失败回退策略：如果找不到位置，优先放在上半部分（比较空）
                 if (!validPosition) {
-                     y = padding + Math.random() * (titleSafeBox.top - h - padding * 2);
-                     x = padding + Math.random() * (maxX - padding);
+                      y = padding + Math.random() * (titleSafeBox.top - h - padding * 2);
+                      x = padding + Math.random() * (maxX - padding);
                 }
 
                 el.style.left = x + 'px';
